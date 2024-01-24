@@ -1,0 +1,4 @@
+GET localhost:8080/configurations/1
+Accept: application/json
+
+###
