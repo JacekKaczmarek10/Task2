@@ -1,4 +1,4 @@
-package com.energysolution.mvp;
+package com.energysolution.iot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
