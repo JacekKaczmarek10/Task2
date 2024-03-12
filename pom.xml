@@ -16,6 +16,7 @@
 	<properties>
 		<java.version>21</java.version>
 		<springboot.starter.version>3.2.3</springboot.starter.version>
+		<maven.version>1.18.30</maven.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -34,6 +35,13 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 			<version>${springboot.starter.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${maven.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
