@@ -1,8 +1,5 @@
-package com.energysolution.iot.service;
+package com.energysolution.iot.configuration;
 
-import com.energysolution.iot.dto.ConfigurationResponse;
-import com.energysolution.iot.model.ConfigurationEntity;
-import com.energysolution.iot.repository.ConfigurationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;

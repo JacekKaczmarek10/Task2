@@ -1,4 +1,4 @@
-package com.energysolution.iot.model;
+package com.energysolution.iot.configuration;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

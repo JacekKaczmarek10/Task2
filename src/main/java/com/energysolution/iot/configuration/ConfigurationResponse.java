@@ -1,4 +1,4 @@
-package com.energysolution.iot.dto;
+package com.energysolution.iot.configuration;
 
 import java.time.LocalDateTime;
 

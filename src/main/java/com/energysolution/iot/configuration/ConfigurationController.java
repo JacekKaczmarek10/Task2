@@ -1,8 +1,5 @@
-package com.energysolution.iot.controller;
+package com.energysolution.iot.configuration;
 
-import com.energysolution.iot.dto.ConfigurationRequest;
-import com.energysolution.iot.dto.ConfigurationResponse;
-import com.energysolution.iot.service.ConfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

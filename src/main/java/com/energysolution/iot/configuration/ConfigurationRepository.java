@@ -1,6 +1,5 @@
-package com.energysolution.iot.repository;
+package com.energysolution.iot.configuration;
 
-import com.energysolution.iot.model.ConfigurationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
