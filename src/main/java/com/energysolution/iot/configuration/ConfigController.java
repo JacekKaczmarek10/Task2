@@ -1,7 +1,8 @@
 package com.energysolution.iot.configuration;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,39 +14,24 @@ public class ConfigController {
     private final ConfigService configService;
 
     @PostMapping
-    public ResponseEntity<ConfigEntity> createConfiguration(@RequestBody ConfigurationRequest configurationRequest) {
-        ConfigEntity newConfiguration = configService.createConfiguration(configurationRequest.deviceId(),
+    public ResponseEntity<Object> createConfiguration(@RequestBody @Valid @NotNull ConfigurationRequest configurationRequest) {
+        return configService.createConfiguration(configurationRequest.deviceId(),
                                                                           configurationRequest.configuration());
-        return ResponseEntity.status(HttpStatus.CREATED).body(newConfiguration);
     }
 
     @GetMapping("/{configId}")
-    public ResponseEntity<ConfigEntity> getConfiguration(@PathVariable Long configId) {
-        ConfigEntity configuration = configService.getConfiguration(configId);
-        if (configuration != null) {
-            return ResponseEntity.ok(configuration);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Object> getConfiguration(@PathVariable Long configId) {
+        return configService.getConfiguration(configId);
     }
 
     @PutMapping("/{configId}")
-    public ResponseEntity<ConfigEntity> updateConfiguration(@PathVariable Long configId, @RequestBody String newConfiguration) {
-        try {
-            ConfigEntity updatedConfiguration = configService.updateConfiguration(configId, newConfiguration);
-            return ResponseEntity.ok(updatedConfiguration);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Object> updateConfiguration(@PathVariable Long configId, @RequestBody String newConfiguration) {
+        return configService.updateConfiguration(configId, newConfiguration);
     }
 
     @DeleteMapping("/{configId}")
-    public ResponseEntity<Void> deleteConfiguration(@PathVariable Long configId) {
-        try {
-            configService.deleteConfiguration(configId);
-            return ResponseEntity.noContent().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Object> deleteConfiguration(@PathVariable Long configId) {
+       return configService.deleteConfiguration(configId);
     }
+
 }
