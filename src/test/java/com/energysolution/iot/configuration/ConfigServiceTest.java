@@ -185,7 +185,7 @@ class ConfigServiceTest {
 
         private final Long configId = 1L;
         private final String configuration = "configuration";
-        private final ConfigEntity configEntity = new ConfigEntity();
+        private final ConfigEntity configEntity = ConfigEntityTestFactory.create();
 
         @Test
         void shouldCallRepository() {
@@ -217,7 +217,7 @@ class ConfigServiceTest {
         void shouldCallSaveUpdatedConfig() {
             ConfigEntity existingConfigEntity = new ConfigEntity();
             existingConfigEntity.setConfiguration("oldConfiguration");
-            existingConfigEntity.setModifiedAt(LocalDateTime.now().minusDays(1)); // Simulating an existing configuration
+            existingConfigEntity.setModifiedAt(LocalDateTime.now().minusDays(1));
             when(configRepository.findById(configId)).thenReturn(Optional.of(existingConfigEntity));
             when(service.saveUpdatedConfig(configuration, existingConfigEntity)).thenReturn(existingConfigEntity);
 
@@ -230,10 +230,21 @@ class ConfigServiceTest {
         @Test
         void shouldReturnOk() {
             when(configRepository.findById(configId)).thenReturn(Optional.of(configEntity));
+            when(service.saveUpdatedConfig(configuration, configEntity)).thenReturn(configEntity);
 
             final var responseEntity = callService();
 
             assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        }
+
+        @Test
+        void shouldReturnResponse() {
+            when(configRepository.findById(configId)).thenReturn(Optional.of(configEntity));
+            when(service.saveUpdatedConfig(configuration, configEntity)).thenReturn(configEntity);
+
+            final var responseEntity = callService();
+
+            assertThat(responseEntity.getBody()).isEqualTo(ConfigurationResponseTestFactory.create());
         }
 
         private ResponseEntity<Object> callService() {

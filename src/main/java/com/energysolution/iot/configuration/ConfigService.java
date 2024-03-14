@@ -54,7 +54,7 @@ public class ConfigService {
             return handleCheckExistingObjectException(new IllegalArgumentException(
                 CONFIGURATION_ID_PREFIX + configId + DOES_NOT_EXIST_MESSAGE));
         }
-        return ResponseEntity.ok(saveUpdatedConfig(newConfiguration, config.get()));
+        return ResponseEntity.ok(new ConfigurationResponse(saveUpdatedConfig(newConfiguration, config.get())));
     }
 
     ConfigEntity saveUpdatedConfig(String newConfiguration, ConfigEntity config){
