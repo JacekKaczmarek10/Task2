@@ -21,7 +21,7 @@ mvn spring-boot:run
 
 
 ```shell
-oc new-app codecentric/springboot-maven3-centos~https://github.com/codecentric/springboot-sample-app
+docker compose up -d --build
 ```
 ## H2 Database url
 http://localhost:8080/h2-console
