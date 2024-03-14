@@ -1,40 +1,11 @@
-version: '3.7'
+version: '3.8'
 services:
   device-backend:
-    image: device-backend:latest
+    image: energy-crud-app:latest
     build:
-      context: src/main/java
+      context: .
       dockerfile: Dockerfile
-    container_name: device-backend
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://device-db:3306/flatpred?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
-      SPRING_DATASOURCE_USERNAME: mysql
-      SPRING_DATASOURCE_PASSWORD: admin
-      SPRING_JPA_DATABASE-PLATFORM: org.hibernate.dialect.MySQL8Dialect
-    depends_on:
-      - mysql
-    networks:
-      - device-net
+    container_name: energy-crud-app
     restart: unless-stopped
     ports:
-      - "8064:8064"
-
-  mysql:
-    image: mysql:8.0
-    container_name: device-db
-    environment:
-      MYSQL_USER: mysql
-      MYSQL_ROOT_PASSWORD: device
-      MYSQL_PASSWORD: device
-      MYSQL_DATABASE: device
-    volumes:
-      - device-mysql-data:/var/lib/mysql
-    networks:
-      - device-net
-
-volumes:
-  device-mysql-data:
-
-networks:
-  device-net:
-    name: device-net
+      - "8080:8080"
