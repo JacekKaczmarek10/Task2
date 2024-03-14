@@ -14,6 +14,9 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+/**
+ * Entity class for IoT device. Each device has an address.
+ */
 @Entity
 @Table(name = "IOT_DEVICE")
 @NoArgsConstructor

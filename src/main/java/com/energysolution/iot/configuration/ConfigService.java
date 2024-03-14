@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service class for configuration operations.
+ */
 @Service
 @AllArgsConstructor
 public class ConfigService {

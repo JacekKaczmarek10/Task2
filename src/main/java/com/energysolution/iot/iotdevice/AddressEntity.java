@@ -5,6 +5,9 @@ import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Entity class for address. Each address is embedded in an IoT device.
+ */
 @Embeddable
 @Getter
 @Setter

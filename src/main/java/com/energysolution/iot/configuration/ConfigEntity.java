@@ -16,6 +16,9 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+/**
+ * Entity class for configuration. Each configuration is associated with a device.
+ */
 @Table(name = "CONFIG")
 @Entity
 @NoArgsConstructor

@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller class for configuration operations.
+ */
 @RestController
 @RequestMapping("/api/configurations")
 @AllArgsConstructor
