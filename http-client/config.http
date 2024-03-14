@@ -1,0 +1,32 @@
+### Utwórz konfigurację
+POST http://localhost:8080/api/configurations
+Content-Type: application/json
+
+{
+  "deviceId": "device1",
+  "configuration": "Your_configuration_data_here"
+}
+
+###
+
+### Odczytaj konfigurację
+GET http://localhost:8080/api/configurations/2
+
+###
+
+### Aktualizuj konfigurację
+PUT http://localhost:8080/api/configurations/2
+Content-Type: application/json
+
+{
+  "deviceId": "device123",
+  "configuration": "New_configuration_data_here",
+  "createdAt": "2024-03-15T10:00:00",
+  "modifiedAt": "2024-03-15T10:00:00"
+}
+
+###
+
+### Usuń konfigurację
+DELETE http://localhost:8080/api/configurations/2
+
