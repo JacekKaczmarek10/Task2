@@ -1,4 +1,4 @@
-package com.energysolution.iot.configuration;
+package com.energysolution.iot.iotdevice;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
