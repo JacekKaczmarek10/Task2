@@ -26,6 +26,11 @@ docker compose up -d --build
 ## H2 Database url
 http://localhost:8080/h2-console
 
+## Code coverage
+
+> score>80%
+
+
 ## Copyright
 
 No copyright allowed. 
