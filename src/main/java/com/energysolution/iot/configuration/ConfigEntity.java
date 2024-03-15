@@ -34,8 +34,8 @@ public class ConfigEntity {
     private String deviceId;
 
     @ManyToOne
-    @JoinColumn(name = "device_key", referencedColumnName = "id")
-    private IoTDeviceEntity device;
+    @JoinColumn(name = "device_key", nullable = false, referencedColumnName = "id")
+    private IoTDeviceEntity deviceKey;
 
     @Column(name = "configuration", nullable = false, length = 10000)
     private String configuration;

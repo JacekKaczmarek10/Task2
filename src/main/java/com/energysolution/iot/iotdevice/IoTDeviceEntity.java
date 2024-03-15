@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 /**
  * Entity class for IoT device. Each device has an address.
@@ -28,21 +28,21 @@ public class IoTDeviceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 128, unique = true)
+    @Column(name = "device_id", nullable = false, length = 128, unique = true)
     private String deviceId;
 
-    @Column(nullable = false)
-    @CreatedDate
+    @Column(name = "creation_date", nullable = false)
+    @CreationTimestamp
     private LocalDateTime creationDate;
 
-    @Column
-    @LastModifiedDate
+    @Column(name = "modification_date")
+    @UpdateTimestamp
     private LocalDateTime modificationDate;
 
-    @Column
+    @Column(name = "startup_date")
     private LocalDateTime startupDate;
 
-    @Column
+    @Column(name = "shutdown_date")
     private LocalDateTime shutdownDate;
 
     @Embedded

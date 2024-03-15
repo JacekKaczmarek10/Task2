@@ -17,7 +17,7 @@ public record ConfigResponse(
         this(
             configEntity.getId(),
             configEntity.getDeviceId(),
-            configEntity.getDevice().getId(),
+            configEntity.getDeviceKey().getId(),
             configEntity.getConfiguration(),
             configEntity.getCreatedAt(),
             configEntity.getModifiedAt()

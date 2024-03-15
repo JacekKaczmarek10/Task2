@@ -45,7 +45,7 @@ class ConfigServiceTest {
         @BeforeEach
         void setUp() {
             deviceEntity.setId(1L);
-            configEntity.setDevice(deviceEntity);
+            configEntity.setDeviceKey(deviceEntity);
         }
 
         @Test
@@ -262,7 +262,7 @@ class ConfigServiceTest {
 
         @BeforeEach
         void setUp() {
-            configEntity.setDevice(ioTDeviceEntity);
+            configEntity.setDeviceKey(ioTDeviceEntity);
             configEntity.setDeviceId(deviceId);
         }
 

@@ -30,6 +30,10 @@ public class ConfigService {
             return handleCheckExistingObjectException(new IllegalArgumentException(
                 DEVICE_ID_PREFIX + deviceId + DOES_NOT_EXIST_MESSAGE));
         }
+        if(configuration.length() > 10000){
+            return handleCheckExistingObjectException(new IllegalArgumentException(
+                "Configuration length exceeds 10000 characters"));
+        }
         final var newConfiguration = saveConfig(iotDevice.get(), deviceId, configuration);
         return ResponseEntity.ok(new ConfigResponse(newConfiguration));
     }
@@ -37,7 +41,7 @@ public class ConfigService {
     ConfigEntity saveConfig(IoTDeviceEntity iotDevice, String deviceId, String configuration){
         final var newConfiguration = new ConfigEntity();
         newConfiguration.setDeviceId(deviceId);
-        newConfiguration.setDevice(Objects.requireNonNull(iotDevice));
+        newConfiguration.setDeviceKey(Objects.requireNonNull(iotDevice));
         newConfiguration.setConfiguration(configuration);
         return configRepository.save(newConfiguration);
     }

@@ -20,9 +20,7 @@ Content-Type: application/json
 
 {
   "deviceId": "device123",
-  "configuration": "New_configuration_data_here",
-  "createdAt": "2024-03-15T10:00:00",
-  "modifiedAt": "2024-03-15T10:00:00"
+  "configuration": "New_configuration_data_here"
 }
 
 ###
