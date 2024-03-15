@@ -1,5 +1,6 @@
 package com.energysolution.iot.configuration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -131,7 +132,7 @@ class ConfigurationControllerTest extends ControllerTest {
 
         @BeforeEach
         void setUp() {
-            when(service.deleteConfiguration(configId)).thenReturn(ResponseEntity.ok(ConfigResponseTestFactory.create()));
+            when(service.deleteConfiguration(configId)).thenReturn(ResponseEntity.ok().build());
         }
 
         @Test
@@ -147,14 +148,13 @@ class ConfigurationControllerTest extends ControllerTest {
         }
 
         @Test
-        void shouldReturnResponseBody() throws Exception {
-            doRequest().andExpect(isEqualToJsonOf(ConfigResponseTestFactory.create()));
+        void shouldNotReturnResponseBody() throws Exception {
+            doRequest().andExpect(result -> assertThat(result.getResponse().getContentAsString()).isEmpty());
         }
 
         private ResultActions doRequest() throws Exception {
             return mockMvc.perform(delete(buildUri("/configurations/{configId}", configId.toString())));
         }
-
 
     }
 }

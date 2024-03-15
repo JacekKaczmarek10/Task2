@@ -1,7 +1,10 @@
 package com.energysolution.iot.configuration;
 
 import java.time.LocalDateTime;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ConfigEntityTestFactory {
 
     public static final Long ID = 1L;

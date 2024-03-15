@@ -1,7 +1,10 @@
 package com.energysolution.iot.configuration;
 
 import com.energysolution.iot.iotdevice.AddressEntity;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AddressEntityTestFactory {
 
     public static final String NAME = "Test Address";

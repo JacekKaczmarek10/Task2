@@ -1,5 +1,9 @@
 package com.energysolution.iot.configuration;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ConfigurationRequestTestFactory {
 
     public static final String VALID_DEVICE_ID = "device1";
