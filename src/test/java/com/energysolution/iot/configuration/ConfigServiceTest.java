@@ -38,7 +38,7 @@ class ConfigServiceTest {
     class CreateConfigurationTest {
 
         private final String deviceId = "deviceId";
-        private final String configuration = "configuration";
+        private String configuration = "configuration";
         private final IoTDeviceEntity deviceEntity = new IoTDeviceEntity();
         private final ConfigEntity configEntity = new ConfigEntity();
 
@@ -66,8 +66,18 @@ class ConfigServiceTest {
         }
 
         @Test
-        void shouldReturnBadRequest() {
+        void shouldReturnBadRequestOnEmptyDevice() {
             when(iotDeviceRepository.findByDeviceId(deviceId)).thenReturn(Optional.empty());
+
+            final var responseEntity = callService();
+
+            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        }
+
+        @Test
+        void shouldReturnBadRequestOnLimitExceeded() {
+            when(iotDeviceRepository.findByDeviceId(deviceId)).thenReturn(Optional.of(deviceEntity));
+            configuration = "a".repeat(10001);
 
             final var responseEntity = callService();
 
