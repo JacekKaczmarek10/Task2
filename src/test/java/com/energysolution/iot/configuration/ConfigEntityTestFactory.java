@@ -10,13 +10,13 @@ public class ConfigEntityTestFactory {
     public static final LocalDateTime CREATED_AT = LocalDateTime.of(2024,10,10,10,10);
     public static final LocalDateTime MODIFIED_AT = LocalDateTime.of(2024,10,10,10,10);
 
-    public static ConfigEntity create() {
-        ConfigEntity configEntity = new ConfigEntity();
-        configEntity.setId(ID);
-        configEntity.setDeviceId(DEVICE_ID);
-        configEntity.setConfiguration(CONFIGURATION);
-        configEntity.setCreatedAt(CREATED_AT);
-        configEntity.setModifiedAt(MODIFIED_AT);
-        return configEntity;
+    public static ConfigurationEntity create() {
+        ConfigurationEntity configurationEntity = new ConfigurationEntity();
+        configurationEntity.setId(ID);
+        configurationEntity.setDeviceId(DEVICE_ID);
+        configurationEntity.setConfiguration(CONFIGURATION);
+        configurationEntity.setCreatedAt(CREATED_AT);
+        configurationEntity.setModifiedAt(MODIFIED_AT);
+        return configurationEntity;
     }
 }

@@ -1,6 +1,6 @@
 package com.energysolution.iot.configuration;
 
-import static com.energysolution.iot.configuration.ConfigService.DOES_NOT_EXIST_MESSAGE;
+import static com.energysolution.iot.configuration.ConfigurationService.DOES_NOT_EXIST_MESSAGE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.argThat;
@@ -22,17 +22,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @SpringBootTest
-class ConfigServiceTest {
+class ConfigurationServiceTest {
 
     @InjectMocks
     @Spy
-    private ConfigService service;
+    private ConfigurationService service;
 
     @Mock
     private IotDeviceRepository iotDeviceRepository;
 
     @Mock
-    private ConfigRepository configRepository;
+    private ConfigurationRepository configurationRepository;
 
     @Nested
     class CreateConfigurationTest {
@@ -40,12 +40,12 @@ class ConfigServiceTest {
         private final String deviceId = "deviceId";
         private String configuration = "configuration";
         private final IoTDeviceEntity deviceEntity = new IoTDeviceEntity();
-        private final ConfigEntity configEntity = new ConfigEntity();
+        private final ConfigurationEntity configurationEntity = new ConfigurationEntity();
 
         @BeforeEach
         void setUp() {
             deviceEntity.setId(1L);
-            configEntity.setDeviceKey(deviceEntity);
+            configurationEntity.setDeviceKey(deviceEntity);
         }
 
         @Test
@@ -87,7 +87,7 @@ class ConfigServiceTest {
         @Test
         void shouldSaveConfig() {
             when(iotDeviceRepository.findByDeviceId(deviceId)).thenReturn(Optional.of(deviceEntity));
-            when(service.saveConfig(deviceEntity, deviceId, configuration)).thenReturn(configEntity);
+            when(service.saveConfig(deviceEntity, deviceId, configuration)).thenReturn(configurationEntity);
 
             callService();
 
@@ -97,7 +97,7 @@ class ConfigServiceTest {
         @Test
         void shouldReturnOk() {
             when(iotDeviceRepository.findByDeviceId(deviceId)).thenReturn(Optional.of(deviceEntity));
-            when(service.saveConfig(deviceEntity, deviceId, configuration)).thenReturn(configEntity);
+            when(service.saveConfig(deviceEntity, deviceId, configuration)).thenReturn(configurationEntity);
 
             final var responseEntity = callService();
 
@@ -120,14 +120,14 @@ class ConfigServiceTest {
         void shouldCallRepository() {
             callService();
 
-            verify(configRepository).save(argThat(config -> config.getDeviceId().equals(deviceId) && config.getConfiguration()
+            verify(configurationRepository).save(argThat(config -> config.getDeviceId().equals(deviceId) && config.getConfiguration()
                 .equals(configuration)));
         }
 
         @Test
         void shouldReturnConfigEntity() {
-            when(configRepository.save(argThat(config -> config.getDeviceId().equals(deviceId) && config.getConfiguration()
-                .equals(configuration)))).thenReturn(new ConfigEntity() {{
+            when(configurationRepository.save(argThat(config -> config.getDeviceId().equals(deviceId) && config.getConfiguration()
+                .equals(configuration)))).thenReturn(new ConfigurationEntity() {{
                 setDeviceId(deviceId);
                 setConfiguration(configuration);
             }});
@@ -138,7 +138,7 @@ class ConfigServiceTest {
             assertThat(configEntity.getConfiguration()).isEqualTo(configuration);
         }
 
-        private ConfigEntity callService() {
+        private ConfigurationEntity callService() {
             return service.saveConfig(deviceEntity, deviceId, configuration);
         }
     }
@@ -147,18 +147,18 @@ class ConfigServiceTest {
     class GetConfigurationTest {
 
         private final Long configId = 1L;
-        private final ConfigEntity configEntity = new ConfigEntity();
+        private final ConfigurationEntity configurationEntity = new ConfigurationEntity();
 
         @Test
         void shouldCallRepository() {
             callService();
 
-            verify(configRepository).findById(configId);
+            verify(configurationRepository).findById(configId);
         }
 
         @Test
         void shouldCallHandleCheckConfigIdException() {
-            when(configRepository.findById(configId)).thenReturn(Optional.empty());
+            when(configurationRepository.findById(configId)).thenReturn(Optional.empty());
 
             callService();
 
@@ -169,7 +169,7 @@ class ConfigServiceTest {
 
         @Test
         void shouldReturnBadRequest() {
-            when(configRepository.findById(configId)).thenReturn(Optional.empty());
+            when(configurationRepository.findById(configId)).thenReturn(Optional.empty());
 
             final var responseEntity = callService();
 
@@ -178,7 +178,7 @@ class ConfigServiceTest {
 
         @Test
         void shouldReturnOk() {
-            when(configRepository.findById(configId)).thenReturn(Optional.of(configEntity));
+            when(configurationRepository.findById(configId)).thenReturn(Optional.of(configurationEntity));
 
             final var responseEntity = callService();
 
@@ -195,18 +195,18 @@ class ConfigServiceTest {
 
         private final Long configId = 1L;
         private final String configuration = "configuration";
-        private final ConfigEntity configEntity = ConfigEntityTestFactory.create();
+        private final ConfigurationEntity configurationEntity = ConfigEntityTestFactory.create();
 
         @Test
         void shouldCallRepository() {
             callService();
 
-            verify(configRepository).findById(configId);
+            verify(configurationRepository).findById(configId);
         }
 
         @Test
         void shouldCallHandleCheckConfigIdException() {
-            when(configRepository.findById(configId)).thenReturn(Optional.empty());
+            when(configurationRepository.findById(configId)).thenReturn(Optional.empty());
 
             callService();
 
@@ -216,7 +216,7 @@ class ConfigServiceTest {
 
         @Test
         void shouldReturnBadRequest() {
-            when(configRepository.findById(configId)).thenReturn(Optional.empty());
+            when(configurationRepository.findById(configId)).thenReturn(Optional.empty());
 
             final var responseEntity = callService();
 
@@ -225,22 +225,22 @@ class ConfigServiceTest {
 
         @Test
         void shouldCallSaveUpdatedConfig() {
-            ConfigEntity existingConfigEntity = new ConfigEntity();
-            existingConfigEntity.setConfiguration("oldConfiguration");
-            existingConfigEntity.setModifiedAt(LocalDateTime.now().minusDays(1));
-            when(configRepository.findById(configId)).thenReturn(Optional.of(existingConfigEntity));
-            when(service.saveUpdatedConfig(configuration, existingConfigEntity)).thenReturn(existingConfigEntity);
+            ConfigurationEntity existingConfigurationEntity = new ConfigurationEntity();
+            existingConfigurationEntity.setConfiguration("oldConfiguration");
+            existingConfigurationEntity.setModifiedAt(LocalDateTime.now().minusDays(1));
+            when(configurationRepository.findById(configId)).thenReturn(Optional.of(existingConfigurationEntity));
+            when(service.saveUpdatedConfig(configuration, existingConfigurationEntity)).thenReturn(existingConfigurationEntity);
 
             callService();
 
-            verify(service).saveUpdatedConfig(configuration, existingConfigEntity);
+            verify(service).saveUpdatedConfig(configuration, existingConfigurationEntity);
         }
 
 
         @Test
         void shouldReturnOk() {
-            when(configRepository.findById(configId)).thenReturn(Optional.of(configEntity));
-            when(service.saveUpdatedConfig(configuration, configEntity)).thenReturn(configEntity);
+            when(configurationRepository.findById(configId)).thenReturn(Optional.of(configurationEntity));
+            when(service.saveUpdatedConfig(configuration, configurationEntity)).thenReturn(configurationEntity);
 
             final var responseEntity = callService();
 
@@ -249,8 +249,8 @@ class ConfigServiceTest {
 
         @Test
         void shouldReturnResponse() {
-            when(configRepository.findById(configId)).thenReturn(Optional.of(configEntity));
-            when(service.saveUpdatedConfig(configuration, configEntity)).thenReturn(configEntity);
+            when(configurationRepository.findById(configId)).thenReturn(Optional.of(configurationEntity));
+            when(service.saveUpdatedConfig(configuration, configurationEntity)).thenReturn(configurationEntity);
 
             final var responseEntity = callService();
 
@@ -267,27 +267,27 @@ class ConfigServiceTest {
 
         private final String deviceId = "deviceId";
         private final String configuration = "configuration";
-        private final ConfigEntity configEntity = new ConfigEntity();
+        private final ConfigurationEntity configurationEntity = new ConfigurationEntity();
         private final IoTDeviceEntity ioTDeviceEntity = new IoTDeviceEntity();
 
         @BeforeEach
         void setUp() {
-            configEntity.setDeviceKey(ioTDeviceEntity);
-            configEntity.setDeviceId(deviceId);
+            configurationEntity.setDeviceKey(ioTDeviceEntity);
+            configurationEntity.setDeviceId(deviceId);
         }
 
         @Test
         void shouldCallRepository() {
             callService();
 
-            verify(configRepository).save(argThat(config -> config.getDeviceId().equals(deviceId) && config.getConfiguration()
+            verify(configurationRepository).save(argThat(config -> config.getDeviceId().equals(deviceId) && config.getConfiguration()
                 .equals(configuration)));
         }
 
         @Test
         void shouldReturnUpdatedConfigEntity() {
-            when(configRepository.save(argThat(config -> config.getDeviceId().equals(deviceId) && config.getConfiguration()
-                .equals(configuration)))).thenReturn(new ConfigEntity() {{
+            when(configurationRepository.save(argThat(config -> config.getDeviceId().equals(deviceId) && config.getConfiguration()
+                .equals(configuration)))).thenReturn(new ConfigurationEntity() {{
                 setDeviceId(deviceId);
                 setConfiguration(configuration);
             }});
@@ -298,8 +298,8 @@ class ConfigServiceTest {
             assertThat(configEntity.getConfiguration()).isEqualTo(configuration);
         }
 
-        private ConfigEntity callService() {
-            return service.saveUpdatedConfig(configuration, configEntity);
+        private ConfigurationEntity callService() {
+            return service.saveUpdatedConfig(configuration, configurationEntity);
         }
     }
 
@@ -307,18 +307,18 @@ class ConfigServiceTest {
     class DeleteConfigurationTest {
 
         private final Long configId = 1L;
-        private final ConfigEntity configEntity = new ConfigEntity();
+        private final ConfigurationEntity configurationEntity = new ConfigurationEntity();
 
         @Test
         void shouldCallRepository() {
             callService();
 
-            verify(configRepository).findById(configId);
+            verify(configurationRepository).findById(configId);
         }
 
         @Test
         void shouldCallHandleCheckConfigIdException() {
-            when(configRepository.findById(configId)).thenReturn(Optional.empty());
+            when(configurationRepository.findById(configId)).thenReturn(Optional.empty());
 
             callService();
 
@@ -329,7 +329,7 @@ class ConfigServiceTest {
 
         @Test
         void shouldReturnBadRequest() {
-            when(configRepository.findById(configId)).thenReturn(Optional.empty());
+            when(configurationRepository.findById(configId)).thenReturn(Optional.empty());
 
             final var responseEntity = callService();
 
@@ -338,7 +338,7 @@ class ConfigServiceTest {
 
         @Test
         void shouldReturnOk() {
-            when(configRepository.findById(configId)).thenReturn(Optional.of(configEntity));
+            when(configurationRepository.findById(configId)).thenReturn(Optional.of(configurationEntity));
 
             final var responseEntity = callService();
 

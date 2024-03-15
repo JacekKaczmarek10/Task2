@@ -14,7 +14,7 @@ CREATE TABLE IOT_DEVICE (
                             country VARCHAR(128) NOT NULL
 );
 
-CREATE TABLE CONFIG (
+CREATE TABLE CONFIGURATION (
                         id BIGINT AUTO_INCREMENT PRIMARY KEY,
                         device_id VARCHAR(128) NOT NULL,
                         device_key BIGINT,

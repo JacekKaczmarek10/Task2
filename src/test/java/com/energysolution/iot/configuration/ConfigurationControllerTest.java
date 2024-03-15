@@ -14,11 +14,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.ResultActions;
 
-@WebMvcTest(ConfigController.class)
-class ConfigControllerTest extends ControllerTest {
+@WebMvcTest(ConfigurationController.class)
+class ConfigurationControllerTest extends ControllerTest {
 
     @MockBean
-    private ConfigService service;
+    private ConfigurationService service;
 
     @Nested
     class CreateConfigurationTest {

@@ -12,29 +12,29 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/configurations")
 @AllArgsConstructor
-public class ConfigController {
+public class ConfigurationController {
 
-    private final ConfigService configService;
+    private final ConfigurationService configurationService;
 
     @PostMapping
     public ResponseEntity<Object> createConfiguration(@RequestBody @Valid @NotNull ConfigurationRequest configurationRequest) {
-        return configService.createConfiguration(configurationRequest.deviceId(),
-                                                                          configurationRequest.configuration());
+        return configurationService.createConfiguration(configurationRequest.deviceId(),
+                                                        configurationRequest.configuration());
     }
 
     @GetMapping("/{configId}")
     public ResponseEntity<Object> getConfiguration(@PathVariable Long configId) {
-        return configService.getConfiguration(configId);
+        return configurationService.getConfiguration(configId);
     }
 
     @PutMapping("/{configId}")
     public ResponseEntity<Object> updateConfiguration(@PathVariable Long configId, @RequestBody String newConfiguration) {
-        return configService.updateConfiguration(configId, newConfiguration);
+        return configurationService.updateConfiguration(configId, newConfiguration);
     }
 
     @DeleteMapping("/{configId}")
     public ResponseEntity<Object> deleteConfiguration(@PathVariable Long configId) {
-       return configService.deleteConfiguration(configId);
+       return configurationService.deleteConfiguration(configId);
     }
 
 }

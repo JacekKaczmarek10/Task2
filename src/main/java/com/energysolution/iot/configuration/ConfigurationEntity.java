@@ -19,12 +19,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 /**
  * Entity class for configuration. Each configuration is associated with a device.
  */
-@Table(name = "CONFIG")
+@Table(name = "CONFIGURATION")
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
-public class ConfigEntity {
+public class ConfigurationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

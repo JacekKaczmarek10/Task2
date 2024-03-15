@@ -15,9 +15,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @AllArgsConstructor
-public class ConfigService {
+public class ConfigurationService {
 
-    private final ConfigRepository configRepository;
+    private final ConfigurationRepository configurationRepository;
     private final IotDeviceRepository ioTDeviceRepository;
 
     public static final String DOES_NOT_EXIST_MESSAGE = " does not exist";
@@ -35,19 +35,19 @@ public class ConfigService {
                 "Configuration length exceeds 10000 characters"));
         }
         final var newConfiguration = saveConfig(iotDevice.get(), deviceId, configuration);
-        return ResponseEntity.ok(new ConfigResponse(newConfiguration));
+        return ResponseEntity.ok(new CreatedConfigurationResponse(newConfiguration));
     }
 
-    ConfigEntity saveConfig(IoTDeviceEntity iotDevice, String deviceId, String configuration){
-        final var newConfiguration = new ConfigEntity();
+    ConfigurationEntity saveConfig(IoTDeviceEntity iotDevice, String deviceId, String configuration){
+        final var newConfiguration = new ConfigurationEntity();
         newConfiguration.setDeviceId(deviceId);
         newConfiguration.setDeviceKey(Objects.requireNonNull(iotDevice));
         newConfiguration.setConfiguration(configuration);
-        return configRepository.save(newConfiguration);
+        return configurationRepository.save(newConfiguration);
     }
 
     ResponseEntity<Object> getConfiguration(final Long configId) {
-        final var config = configRepository.findById(configId);
+        final var config = configurationRepository.findById(configId);
         if (config.isEmpty()){
             return handleCheckExistingObjectException(new IllegalArgumentException(
                 CONFIGURATION_ID_PREFIX + configId + DOES_NOT_EXIST_MESSAGE));
@@ -56,27 +56,27 @@ public class ConfigService {
     }
 
     ResponseEntity<Object> updateConfiguration(final Long configId, final String newConfiguration) {
-        final var config = configRepository.findById(configId);
+        final var config = configurationRepository.findById(configId);
         if (config.isEmpty()){
             return handleCheckExistingObjectException(new IllegalArgumentException(
                 CONFIGURATION_ID_PREFIX + configId + DOES_NOT_EXIST_MESSAGE));
         }
-        return ResponseEntity.ok(new ConfigurationResponse(saveUpdatedConfig(newConfiguration, config.get())));
+        return ResponseEntity.ok(new UpdatedConfigurationResponse(saveUpdatedConfig(newConfiguration, config.get())));
     }
 
-    ConfigEntity saveUpdatedConfig(String newConfiguration, ConfigEntity config){
+    ConfigurationEntity saveUpdatedConfig(String newConfiguration, ConfigurationEntity config){
         config.setConfiguration(newConfiguration);
         config.setModifiedAt(LocalDateTime.now());
-        return configRepository.save(config);
+        return configurationRepository.save(config);
     }
 
     ResponseEntity<Object> deleteConfiguration(Long configId) {
-        final var config = configRepository.findById(configId);
+        final var config = configurationRepository.findById(configId);
         if (config.isEmpty()){
             return handleCheckExistingObjectException(new IllegalArgumentException(
                 CONFIGURATION_ID_PREFIX + configId + DOES_NOT_EXIST_MESSAGE));
         }
-        configRepository.deleteById(configId);
+        configurationRepository.deleteById(configId);
         return ResponseEntity.ok().build();
     }
 
