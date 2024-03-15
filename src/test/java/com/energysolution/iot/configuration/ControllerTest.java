@@ -7,15 +7,11 @@ import java.net.URI;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.web.util.UriTemplate;
 
 public abstract class ControllerTest {
-
-    @Value("${api.basepath}")
-    private String baseUrl;
 
     @Autowired
     protected MockMvc mockMvc;
@@ -33,6 +29,6 @@ public abstract class ControllerTest {
     }
 
     protected URI buildUri(final String endpointUriTemplate, final Object... uriVariableValues) {
-        return new UriTemplate("/" + baseUrl + StringUtils.prependIfMissing(endpointUriTemplate, "/")).expand(uriVariableValues);
+        return new UriTemplate(StringUtils.prependIfMissing(endpointUriTemplate, "/")).expand(uriVariableValues);
     }
 }

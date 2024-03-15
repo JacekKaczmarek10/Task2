@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
  * Controller class for configuration operations.
  */
 @RestController
-@RequestMapping("/api/configurations")
+@RequestMapping("/configurations")
 @AllArgsConstructor
 public class ConfigController {
 

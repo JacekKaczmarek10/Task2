@@ -1,5 +1,5 @@
 ### Utwórz konfigurację
-POST http://localhost:8080/api/configurations
+POST http://localhost:8080/configurations
 Content-Type: application/json
 
 {
@@ -10,12 +10,12 @@ Content-Type: application/json
 ###
 
 ### Odczytaj konfigurację
-GET http://localhost:8080/api/configurations/2
+GET http://localhost:8080/configurations/2
 
 ###
 
 ### Aktualizuj konfigurację
-PUT http://localhost:8080/api/configurations/2
+PUT http://localhost:8080/configurations/2
 Content-Type: application/json
 
 {
@@ -28,5 +28,5 @@ Content-Type: application/json
 ###
 
 ### Usuń konfigurację
-DELETE http://localhost:8080/api/configurations/2
+DELETE http://localhost:8080/configurations/2
 
