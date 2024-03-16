@@ -1,11 +1,13 @@
 package com.energysolution.iot.configuration;
 
+import com.energysolution.iot.iotdevice.IoTDeviceEntity;
+
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ConfigEntityTestFactory {
+public class ConfigurationEntityTestFactory {
 
     public static final Long ID = 1L;
     public static final String DEVICE_ID = "TestDevice";
@@ -17,6 +19,7 @@ public class ConfigEntityTestFactory {
         ConfigurationEntity configurationEntity = new ConfigurationEntity();
         configurationEntity.setId(ID);
         configurationEntity.setDeviceId(DEVICE_ID);
+        configurationEntity.setDeviceKey(IoTDeviceEntityTestFactory.create());
         configurationEntity.setConfiguration(CONFIGURATION);
         configurationEntity.setCreatedAt(CREATED_AT);
         configurationEntity.setModifiedAt(MODIFIED_AT);

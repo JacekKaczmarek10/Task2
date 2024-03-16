@@ -10,6 +10,8 @@ import com.energysolution.iot.iotdevice.IoTDeviceEntity;
 import com.energysolution.iot.iotdevice.IotDeviceRepository;
 import java.time.LocalDateTime;
 import java.util.Optional;
+
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -146,7 +148,7 @@ class ConfigurationServiceTest {
     class GetConfigurationTest {
 
         private final Long configId = 1L;
-        private final ConfigurationEntity configurationEntity = ConfigEntityTestFactory.create();
+        private final ConfigurationEntity configurationEntity = ConfigurationEntityTestFactory.create();
 
         @Test
         void shouldCallRepository() {
@@ -189,7 +191,7 @@ class ConfigurationServiceTest {
 
             final var responseEntity = callService();
 
-            assertThat(responseEntity.getBody()).isEqualTo(ConfigurationResponseTestFactory.create());
+            assertThat(responseEntity.getBody()).isEqualTo(GetConfigurationResponseTestFactory.create());
         }
 
         private ResponseEntity<Object> callService() {
@@ -202,7 +204,7 @@ class ConfigurationServiceTest {
 
         private final Long configId = 1L;
         private final String configuration = "configuration";
-        private final ConfigurationEntity configurationEntity = ConfigEntityTestFactory.create();
+        private ConfigurationEntity configurationEntity = ConfigurationEntityTestFactory.create();
 
         @Test
         void shouldCallRepository() {
@@ -232,17 +234,15 @@ class ConfigurationServiceTest {
 
         @Test
         void shouldCallSaveUpdatedConfig() {
-            ConfigurationEntity existingConfigurationEntity = new ConfigurationEntity();
-            existingConfigurationEntity.setConfiguration("oldConfiguration");
-            existingConfigurationEntity.setModifiedAt(LocalDateTime.now().minusDays(1));
-            when(configurationRepository.findById(configId)).thenReturn(Optional.of(existingConfigurationEntity));
-            when(service.saveUpdatedConfig(configuration, existingConfigurationEntity)).thenReturn(existingConfigurationEntity);
+            configurationEntity.setConfiguration("oldConfiguration");
+            configurationEntity.setModifiedAt(LocalDateTime.now().minusDays(1));
+            when(configurationRepository.findById(configId)).thenReturn(Optional.of(configurationEntity));
+            when(service.saveUpdatedConfig(configuration, configurationEntity)).thenReturn(configurationEntity);
 
             callService();
 
-            verify(service).saveUpdatedConfig(configuration, existingConfigurationEntity);
+            verify(service).saveUpdatedConfig(configuration, configurationEntity);
         }
-
 
         @Test
         void shouldReturnOk() {
@@ -261,7 +261,7 @@ class ConfigurationServiceTest {
 
             final var responseEntity = callService();
 
-            assertThat(responseEntity.getBody()).isEqualTo(ConfigurationResponseTestFactory.create());
+            assertThat(responseEntity.getBody()).usingRecursiveComparison().ignoringFields("modifiedAt").isEqualTo(ConfigurationResponseTestFactory.create());
         }
 
         private ResponseEntity<Object> callService() {

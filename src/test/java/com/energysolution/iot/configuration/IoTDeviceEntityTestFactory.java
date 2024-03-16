@@ -26,4 +26,6 @@ public class IoTDeviceEntityTestFactory {
         device.setAddress(AddressEntityTestFactory.create());
         return device;
     }
+
+
 }

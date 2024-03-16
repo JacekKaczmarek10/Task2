@@ -35,7 +35,7 @@ public class ConfigurationService {
                 "Configuration length exceeds 10000 characters"));
         }
         final var newConfiguration = saveConfig(iotDevice.get(), deviceId, configuration);
-        return ResponseEntity.ok(new CreatedConfigurationResponse(newConfiguration));
+        return ResponseEntity.ok(new ConfigurationResponse(newConfiguration));
     }
 
     ConfigurationEntity saveConfig(IoTDeviceEntity iotDevice, String deviceId, String configuration){
@@ -52,7 +52,7 @@ public class ConfigurationService {
             return handleCheckExistingObjectException(new IllegalArgumentException(
                 CONFIGURATION_ID_PREFIX + configId + DOES_NOT_EXIST_MESSAGE));
         }
-        return ResponseEntity.ok(new ConfigurationResponse(config.get()));
+        return ResponseEntity.ok(new GetConfigurationResponse(config.get()));
     }
 
     ResponseEntity<Object> updateConfiguration(final Long configId, final String newConfiguration) {
@@ -61,7 +61,7 @@ public class ConfigurationService {
             return handleCheckExistingObjectException(new IllegalArgumentException(
                 CONFIGURATION_ID_PREFIX + configId + DOES_NOT_EXIST_MESSAGE));
         }
-        return ResponseEntity.ok(new UpdatedConfigurationResponse(saveUpdatedConfig(newConfiguration, config.get())));
+        return ResponseEntity.ok(new ConfigurationResponse(saveUpdatedConfig(newConfiguration, config.get())));
     }
 
     ConfigurationEntity saveUpdatedConfig(String newConfiguration, ConfigurationEntity config){

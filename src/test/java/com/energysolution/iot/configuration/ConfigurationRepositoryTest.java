@@ -19,10 +19,10 @@ class ConfigurationRepositoryTest {
 
         @Test
         void shouldFind() {
-            final var config = ConfigEntityTestFactory.create();
+            final var config = ConfigurationEntityTestFactory.create();
             configurationRepository.saveAndFlush(config);
 
-            final var result = configurationRepository.findById(ConfigEntityTestFactory.ID);
+            final var result = configurationRepository.findById(ConfigurationEntityTestFactory.ID);
 
             assertThat(result).usingRecursiveComparison().ignoringFields("value.createdAt", "value.modifiedAt").isEqualTo(Optional.of(config));
         }

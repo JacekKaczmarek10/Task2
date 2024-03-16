@@ -28,7 +28,8 @@ class ConfigurationControllerTest extends ControllerTest {
 
         @BeforeEach
         void setUp() {
-            when(service.createConfiguration(configurationRequest.deviceId(), configurationRequest.configuration())).thenReturn(ResponseEntity.ok(ConfigResponseTestFactory.create()));
+            when(service.createConfiguration(configurationRequest.deviceId(), configurationRequest.configuration())).thenReturn(ResponseEntity.ok(
+                ConfigurationResponseTestFactory.create()));
         }
 
         @Test
@@ -45,7 +46,7 @@ class ConfigurationControllerTest extends ControllerTest {
 
         @Test
         void shouldReturnResponseBody() throws Exception {
-            doRequest().andExpect(isEqualToJsonOf(ConfigResponseTestFactory.create()));
+            doRequest().andExpect(isEqualToJsonOf(ConfigurationResponseTestFactory.create()));
         }
 
         private ResultActions doRequest() throws Exception {
@@ -63,7 +64,7 @@ class ConfigurationControllerTest extends ControllerTest {
 
         @BeforeEach
         void setUp() {
-            when(service.getConfiguration(configId)).thenReturn(ResponseEntity.ok(ConfigResponseTestFactory.create()));
+            when(service.getConfiguration(configId)).thenReturn(ResponseEntity.ok(ConfigurationResponseTestFactory.create()));
         }
 
         @Test
@@ -80,7 +81,7 @@ class ConfigurationControllerTest extends ControllerTest {
 
         @Test
         void shouldReturnResponseBody() throws Exception {
-            doRequest().andExpect(isEqualToJsonOf(ConfigResponseTestFactory.create()));
+            doRequest().andExpect(isEqualToJsonOf(ConfigurationResponseTestFactory.create()));
         }
 
         private ResultActions doRequest() throws Exception {
@@ -97,7 +98,8 @@ class ConfigurationControllerTest extends ControllerTest {
 
         @BeforeEach
         void setUp() {
-            when(service.updateConfiguration(configId, configurationRequest.configuration())).thenReturn(ResponseEntity.ok(ConfigResponseTestFactory.create()));
+            when(service.updateConfiguration(configId, configurationRequest.configuration())).thenReturn(ResponseEntity.ok(
+                ConfigurationResponseTestFactory.create()));
         }
 
         @Test
@@ -114,7 +116,7 @@ class ConfigurationControllerTest extends ControllerTest {
 
         @Test
         void shouldReturnResponseBody() throws Exception {
-            doRequest().andExpect(isEqualToJsonOf(ConfigResponseTestFactory.create()));
+            doRequest().andExpect(isEqualToJsonOf(ConfigurationResponseTestFactory.create()));
         }
 
         private ResultActions doRequest() throws Exception {
