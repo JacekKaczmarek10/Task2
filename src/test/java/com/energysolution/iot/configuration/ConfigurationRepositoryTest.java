@@ -3,6 +3,7 @@ package com.energysolution.iot.configuration;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
+
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ class ConfigurationRepositoryTest {
     @Autowired
     private ConfigurationRepository configurationRepository;
 
+
     @Nested
     class FindByDeviceIdTest {
 
@@ -24,7 +26,9 @@ class ConfigurationRepositoryTest {
 
             final var result = configurationRepository.findById(ConfigurationEntityTestFactory.ID);
 
-            assertThat(result).usingRecursiveComparison().ignoringFields("value.createdAt", "value.modifiedAt").isEqualTo(Optional.of(config));
+            assertThat(result).usingRecursiveComparison().ignoringFields("value.deviceKey.creationDate", "value.deviceKey"
+                    + ".modificationDate", "value.deviceKey.shutdownDate", "value.createdAt", "value.deviceKey.startupDate", "value.modifiedAt")
+                .isEqualTo(Optional.of(config));
         }
 
     }

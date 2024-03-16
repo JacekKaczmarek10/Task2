@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AddressEntityTestFactory {
 
-    public static final String NAME = "Test Address";
+    public static final String NAME = "Test Name";
     public static final String STREET = "Test Street";
     public static final String BUILDING_NUMBER = "123";
     public static final String APARTMENT_NUMBER = "456";
