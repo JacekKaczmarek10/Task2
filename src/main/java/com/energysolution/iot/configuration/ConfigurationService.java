@@ -52,7 +52,7 @@ public class ConfigurationService {
             return handleCheckExistingObjectException(new IllegalArgumentException(
                 CONFIGURATION_ID_PREFIX + configId + DOES_NOT_EXIST_MESSAGE));
         }
-        return ResponseEntity.ok(config.get());
+        return ResponseEntity.ok(new ConfigurationResponse(config.get()));
     }
 
     ResponseEntity<Object> updateConfiguration(final Long configId, final String newConfiguration) {

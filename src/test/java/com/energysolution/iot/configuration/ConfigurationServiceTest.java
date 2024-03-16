@@ -146,7 +146,7 @@ class ConfigurationServiceTest {
     class GetConfigurationTest {
 
         private final Long configId = 1L;
-        private final ConfigurationEntity configurationEntity = new ConfigurationEntity();
+        private final ConfigurationEntity configurationEntity = ConfigEntityTestFactory.create();
 
         @Test
         void shouldCallRepository() {
@@ -181,6 +181,15 @@ class ConfigurationServiceTest {
             final var responseEntity = callService();
 
             assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        }
+
+        @Test
+        void shouldReturnResponse() {
+            when(configurationRepository.findById(configId)).thenReturn(Optional.of(configurationEntity));
+
+            final var responseEntity = callService();
+
+            assertThat(responseEntity.getBody()).isEqualTo(ConfigurationResponseTestFactory.create());
         }
 
         private ResponseEntity<Object> callService() {

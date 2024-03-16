@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ConfigurationResponseTestFactory {
 
-    public static final String CONFIGURATION = "configuration";
+    public static final String CONFIGURATION = "TestConfiguration";
     public static final LocalDateTime CREATED_AT = LocalDateTime.of(2024,10,10,10,10);
 
-    public static UpdatedConfigurationResponse create() {
-        return new UpdatedConfigurationResponse(CONFIGURATION, CREATED_AT);
+    public static ConfigurationResponse create() {
+        return new ConfigurationResponse(CONFIGURATION, CREATED_AT);
     }
 }
