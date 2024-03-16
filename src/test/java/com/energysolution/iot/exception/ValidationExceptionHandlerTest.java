@@ -1,6 +1,6 @@
 package com.energysolution.iot.exception;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
@@ -30,7 +30,7 @@ public class ValidationExceptionHandlerTest {
 
             final var response = handler.handleValidationExceptions(exception);
 
-            assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
 
         @Test
@@ -46,7 +46,7 @@ public class ValidationExceptionHandlerTest {
 
             final var expectedErrors = new HashMap<>();
             expectedErrors.put("fieldName", "error message");
-            assertEquals(expectedErrors, response.getBody());
+            assertThat(response.getBody()).isEqualTo(expectedErrors);
         }
     }
 

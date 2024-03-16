@@ -2,7 +2,6 @@ package com.energysolution.iot.configuration;
 
 import static com.energysolution.iot.configuration.ConfigurationService.DOES_NOT_EXIST_MESSAGE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -166,14 +165,13 @@ class ConfigurationServiceTest {
                 .equals("Configuration with id " + configId + DOES_NOT_EXIST_MESSAGE)));
         }
 
-
         @Test
         void shouldReturnBadRequest() {
             when(configurationRepository.findById(configId)).thenReturn(Optional.empty());
 
             final var responseEntity = callService();
 
-            assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
 
         @Test
@@ -220,7 +218,7 @@ class ConfigurationServiceTest {
 
             final var responseEntity = callService();
 
-            assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
 
         @Test

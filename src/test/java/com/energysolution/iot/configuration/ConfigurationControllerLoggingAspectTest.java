@@ -1,8 +1,5 @@
 package com.energysolution.iot.configuration;
 
-import com.energysolution.iot.configuration.ConfigurationController;
-import com.energysolution.iot.configuration.ConfigurationRequest;
-import com.energysolution.iot.configuration.ConfigurationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -12,7 +9,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.*;
 
 public class ConfigurationControllerLoggingAspectTest {
@@ -41,7 +38,7 @@ public class ConfigurationControllerLoggingAspectTest {
 
             final var actualResponse = configurationController.createConfiguration(new ConfigurationRequest(deviceId, configuration));
 
-            assertEquals(expectedResponse, actualResponse);
+            assertThat(actualResponse).isEqualTo(expectedResponse);
         }
 
         @Test
@@ -52,7 +49,7 @@ public class ConfigurationControllerLoggingAspectTest {
 
             final var actualResponse = configurationController.createConfiguration(new ConfigurationRequest(deviceId, configuration));
 
-            assertEquals(expectedResponse, actualResponse);
+            assertThat(actualResponse).isEqualTo(expectedResponse);
         }
     }
 
@@ -68,7 +65,7 @@ public class ConfigurationControllerLoggingAspectTest {
 
             final var actualResponse = configurationController.getConfiguration(configId);
 
-            assertEquals(expectedResponse, actualResponse);
+            assertThat(actualResponse).isEqualTo(expectedResponse);
         }
 
         @Test
@@ -78,7 +75,7 @@ public class ConfigurationControllerLoggingAspectTest {
 
             final var actualResponse = configurationController.getConfiguration(configId);
 
-            assertEquals(expectedResponse, actualResponse);
+            assertThat(actualResponse).isEqualTo(expectedResponse);
         }
     }
 
@@ -96,7 +93,7 @@ public class ConfigurationControllerLoggingAspectTest {
 
             final var actualResponse = configurationController.updateConfiguration(configId, configuration);
 
-            assertEquals(expectedResponse, actualResponse);
+            assertThat(actualResponse).isEqualTo(expectedResponse);
         }
 
         @Test
@@ -106,7 +103,7 @@ public class ConfigurationControllerLoggingAspectTest {
 
             final var actualResponse = configurationController.updateConfiguration(configId, configuration);
 
-            assertEquals(expectedResponse, actualResponse);
+            assertThat(actualResponse).isEqualTo(expectedResponse);
         }
     }
 
@@ -122,7 +119,7 @@ public class ConfigurationControllerLoggingAspectTest {
 
             final var actualResponse = configurationController.deleteConfiguration(configId);
 
-            assertEquals(expectedResponse, actualResponse);
+            assertThat(actualResponse).isEqualTo(expectedResponse);
         }
 
         @Test
@@ -132,7 +129,7 @@ public class ConfigurationControllerLoggingAspectTest {
 
             final var actualResponse = configurationController.deleteConfiguration(configId);
 
-            assertEquals(expectedResponse, actualResponse);
+            assertThat(actualResponse).isEqualTo(expectedResponse);
         }
     }
 }
