@@ -26,7 +26,7 @@ public class ConfigurationControllerLoggingAspectTest {
     }
 
     @Nested
-    class LoggingCreateConfigurationTests {
+    class LoggingCreateConfigurationTest {
 
         private final String deviceId = "testDeviceId";
         private String configuration = "testConfiguration";
@@ -54,7 +54,7 @@ public class ConfigurationControllerLoggingAspectTest {
     }
 
     @Nested
-    class LoggingGetConfigurationTests {
+    class LoggingGetConfigurationTest {
 
         private Long configId = 1L;
 
@@ -80,7 +80,7 @@ public class ConfigurationControllerLoggingAspectTest {
     }
 
     @Nested
-    class LoggingUpdateConfigurationTests {
+    class LoggingUpdateConfigurationTest {
 
         private Long configId = 1L;
 
@@ -108,7 +108,7 @@ public class ConfigurationControllerLoggingAspectTest {
     }
 
     @Nested
-    class LoggingDeleteConfigurationTests {
+    class LoggingDeleteConfigurationTest {
 
         private Long configId = 1L;
 

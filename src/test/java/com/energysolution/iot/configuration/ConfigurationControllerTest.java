@@ -155,6 +155,5 @@ class ConfigurationControllerTest extends ControllerTest {
         private ResultActions doRequest() throws Exception {
             return mockMvc.perform(delete(buildUri("/configurations/{configId}", configId.toString())));
         }
-
     }
 }
