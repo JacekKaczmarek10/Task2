@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/configurations")
 @AllArgsConstructor
+@Transactional
 class ConfigurationController {
 
     private final ConfigurationService configurationService;
@@ -23,6 +25,7 @@ class ConfigurationController {
     }
 
     @GetMapping("/{configId}")
+    @Transactional(readOnly = true)
     ResponseEntity<Object> getConfiguration(@PathVariable Long configId) {
         return configurationService.getConfiguration(configId);
     }
