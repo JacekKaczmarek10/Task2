@@ -39,13 +39,13 @@ class ConfigurationServiceTest {
 
         private final String deviceId = "deviceId";
         private String configuration = "configuration";
-        private final IoTDeviceEntity deviceEntity = new IoTDeviceEntity();
-        private final ConfigurationEntity configurationEntity = new ConfigurationEntity();
+        private final IoTDeviceEntity ioTDeviceEntity = IoTDeviceEntityTestFactory.create();
+        private final ConfigurationEntity configurationEntity = ConfigurationEntityTestFactory.create();
 
         @BeforeEach
         void setUp() {
-            deviceEntity.setId(1L);
-            configurationEntity.setDeviceKey(deviceEntity);
+            ioTDeviceEntity.setId(1L);
+            configurationEntity.setDeviceKey(ioTDeviceEntity);
         }
 
         @Test
@@ -66,6 +66,17 @@ class ConfigurationServiceTest {
         }
 
         @Test
+        void shouldCallHandleCheckConfigurationOnLimitExceeded() {
+            when(iotDeviceRepository.findByDeviceId(deviceId)).thenReturn(Optional.of(ioTDeviceEntity));
+            configuration = "a".repeat(10001);
+
+             callService();
+
+            verify(service).handleCheckExistingObjectException(argThat(exception ->
+                exception.getMessage().equals("Configuration length exceeds 10000 characters")));
+        }
+
+        @Test
         void shouldReturnBadRequestOnEmptyDevice() {
             when(iotDeviceRepository.findByDeviceId(deviceId)).thenReturn(Optional.empty());
 
@@ -76,7 +87,7 @@ class ConfigurationServiceTest {
 
         @Test
         void shouldReturnBadRequestOnLimitExceeded() {
-            when(iotDeviceRepository.findByDeviceId(deviceId)).thenReturn(Optional.of(deviceEntity));
+            when(iotDeviceRepository.findByDeviceId(deviceId)).thenReturn(Optional.of(ioTDeviceEntity));
             configuration = "a".repeat(10001);
 
             final var responseEntity = callService();
@@ -86,18 +97,18 @@ class ConfigurationServiceTest {
 
         @Test
         void shouldSaveConfig() {
-            when(iotDeviceRepository.findByDeviceId(deviceId)).thenReturn(Optional.of(deviceEntity));
-            when(service.saveConfig(deviceEntity, deviceId, configuration)).thenReturn(configurationEntity);
+            when(iotDeviceRepository.findByDeviceId(deviceId)).thenReturn(Optional.of(ioTDeviceEntity));
+            when(service.saveConfig(ioTDeviceEntity, deviceId, configuration)).thenReturn(configurationEntity);
 
             callService();
 
-            verify(service).saveConfig(deviceEntity, deviceId, configuration);
+            verify(service).saveConfig(ioTDeviceEntity, deviceId, configuration);
         }
 
         @Test
         void shouldReturnOk() {
-            when(iotDeviceRepository.findByDeviceId(deviceId)).thenReturn(Optional.of(deviceEntity));
-            when(service.saveConfig(deviceEntity, deviceId, configuration)).thenReturn(configurationEntity);
+            when(iotDeviceRepository.findByDeviceId(deviceId)).thenReturn(Optional.of(ioTDeviceEntity));
+            when(service.saveConfig(ioTDeviceEntity, deviceId, configuration)).thenReturn(configurationEntity);
 
             final var responseEntity = callService();
 
@@ -202,7 +213,7 @@ class ConfigurationServiceTest {
     class UpdateConfigurationTest {
 
         private final Long configId = 1L;
-        private final UpdateConfigurationRequest updateConfigurationRequest = UpdateConfigurationRequestTestFactory.create();
+        private UpdateConfigurationRequest updateConfigurationRequest = UpdateConfigurationRequestTestFactory.create();
         private ConfigurationEntity configurationEntity = ConfigurationEntityTestFactory.create();
         private IoTDeviceEntity ioTDeviceEntity = IoTDeviceEntityTestFactory.create();
 
@@ -221,6 +232,28 @@ class ConfigurationServiceTest {
 
             verify(service).handleCheckExistingObjectException(argThat(
                 exception -> exception.getMessage().equals("Configuration with id " + configId + DOES_NOT_EXIST_MESSAGE)));
+        }
+
+        @Test
+        void shouldCallHandleCheckDeviceIdException() {
+            when(configurationRepository.findById(configId)).thenReturn(Optional.ofNullable(configurationEntity));
+            when(iotDeviceRepository.findByDeviceId(updateConfigurationRequest.deviceId())).thenReturn(Optional.empty());
+
+            callService();
+
+            verify(service).handleCheckExistingObjectException(argThat(
+                exception -> exception.getMessage().equals("Device with id " + updateConfigurationRequest.deviceId() + DOES_NOT_EXIST_MESSAGE)));
+        }
+
+        @Test
+        void shouldReturnBadRequestOnLimitExceeded() {
+            when(configurationRepository.findById(configId)).thenReturn(Optional.ofNullable(configurationEntity));
+            when(iotDeviceRepository.findByDeviceId(updateConfigurationRequest.deviceId())).thenReturn(Optional.of(ioTDeviceEntity));
+            updateConfigurationRequest = updateConfigurationRequest.withConfiguration("a".repeat(10001));
+
+            final var responseEntity = callService();
+
+            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
 
         @Test

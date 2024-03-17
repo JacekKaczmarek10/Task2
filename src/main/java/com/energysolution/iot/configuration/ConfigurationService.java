@@ -57,6 +57,10 @@ public class ConfigurationService {
 
     ResponseEntity<Object> updateConfiguration(final Long configId, final UpdateConfigurationRequest updateConfigurationRequest) {
         final var config = configurationRepository.findById(configId);
+        if(updateConfigurationRequest.configuration().length() > 10000){
+            return handleCheckExistingObjectException(new IllegalArgumentException(
+                "Configuration length exceeds 10000 characters."));
+        }
         if (config.isEmpty()){
             return handleCheckExistingObjectException(new IllegalArgumentException(
                 CONFIGURATION_ID_PREFIX + configId + DOES_NOT_EXIST_MESSAGE));

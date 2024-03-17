@@ -5,4 +5,7 @@ public record UpdateConfigurationRequest(
     String configuration
 ) {
 
+    public UpdateConfigurationRequest withConfiguration(String newConfiguration) {
+        return new UpdateConfigurationRequest(this.deviceId, newConfiguration);
+    }
 }
