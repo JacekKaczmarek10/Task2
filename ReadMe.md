@@ -23,6 +23,15 @@ mvn spring-boot:run
 ```shell
 docker compose up -d --build
 ```
+
+## Initial data
+| Device ID | Creation Date        | Modification Date    | Startup Date         | Shutdown Date        | Name     | Street    | Building Number | Apartment Number | City     | Postal Code | Country   |
+| --------- | -------------------- | -------------------- | -------------------- | -------------------- | -------- | --------- | --------------- | ---------------- | -------- | ----------- | --------- |
+| TestDevice| 2024-10-10T10:00:00 | 2024-10-10T10:00:00 | 2024-10-10T10:00:00 | 2024-10-10T10:00:00 | Test Name| Test Street| 123             | 456              | Test City| 12345       | Test Country |
+| device2   | 2024-10-10T10:00:00 | 2024-10-10T10:00:00 | 2024-10-10T10:00:00 | 2024-10-10T10:00:00 | Name2    | Street2    | 2               | NULL             | City2    | 23456       | Country2   |
+| device3   | 2024-10-10T10:00:00 | 2024-10-10T10:00:00 | 2024-10-10T10:00:00 | 2024-10-10T10:00:00 | Name3    | Street3    | 3               | NULL             | City3    | 34567       | Country3   |
+
+
 ## H2 Database url
 http://localhost:8080/h2-console
 
