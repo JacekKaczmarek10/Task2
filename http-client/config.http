@@ -3,7 +3,7 @@ POST http://localhost:8080/configurations
 Content-Type: application/json
 
 {
-  "deviceId": "device1",
+  "deviceId": "TestDevice",
   "configuration": "Your_configuration_data_here"
 }
 
@@ -15,16 +15,16 @@ GET http://localhost:8080/configurations/1
 ###
 
 ### Aktualizuj konfigurację
-PUT http://localhost:8080/configurations/2
+PUT http://localhost:8080/configurations/1
 Content-Type: application/json
 
 {
-  "deviceId": "device123",
+  "deviceId": "TestDevice",
   "configuration": "New_configuration_data_here"
 }
 
 ###
 
 ### Usuń konfigurację
-DELETE http://localhost:8080/configurations/2
+DELETE http://localhost:8080/configurations/1
 
