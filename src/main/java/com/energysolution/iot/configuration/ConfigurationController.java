@@ -28,8 +28,8 @@ class ConfigurationController {
     }
 
     @PutMapping("/{configId}")
-    ResponseEntity<Object> updateConfiguration(@PathVariable Long configId, @RequestBody String newConfiguration) {
-        return configurationService.updateConfiguration(configId, newConfiguration);
+    ResponseEntity<Object> updateConfiguration(@PathVariable Long configId, @RequestBody UpdateConfigurationRequest configuration) {
+        return configurationService.updateConfiguration(configId, configuration);
     }
 
     @DeleteMapping("/{configId}")

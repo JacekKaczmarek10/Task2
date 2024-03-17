@@ -93,12 +93,12 @@ class ConfigurationControllerTest extends ControllerTest {
     @Nested
     class UpdateConfigurationTest {
 
-        private static final ConfigurationRequest configurationRequest = ConfigurationRequestTestFactory.create();
+        private static final UpdateConfigurationRequest updateConfigurationRequest = UpdateConfigurationRequestTestFactory.create();
         private static final Long configId = 10L;
 
         @BeforeEach
         void setUp() {
-            when(service.updateConfiguration(configId, configurationRequest.configuration())).thenReturn(ResponseEntity.ok(
+            when(service.updateConfiguration(configId, updateConfigurationRequest)).thenReturn(ResponseEntity.ok(
                 ConfigurationResponseTestFactory.create()));
         }
 
@@ -106,7 +106,7 @@ class ConfigurationControllerTest extends ControllerTest {
         void shouldCallsService() throws Exception {
             doRequest();
 
-            verify(service).updateConfiguration(configId, configurationRequest.configuration());
+            verify(service).updateConfiguration(configId, updateConfigurationRequest);
         }
 
         @Test
@@ -122,7 +122,7 @@ class ConfigurationControllerTest extends ControllerTest {
         private ResultActions doRequest() throws Exception {
             return mockMvc.perform(put(buildUri("/configurations/{configId}", configId.toString()))
                                        .contentType(MediaType.APPLICATION_JSON)
-                                       .content(configurationRequest.configuration()));
+                                       .content(toJsonString(updateConfigurationRequest)));
         }
 
     }

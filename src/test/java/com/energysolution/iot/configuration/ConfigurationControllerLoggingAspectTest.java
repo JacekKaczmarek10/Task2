@@ -83,15 +83,14 @@ public class ConfigurationControllerLoggingAspectTest {
     class LoggingUpdateConfigurationTest {
 
         private Long configId = 1L;
-
-        private String configuration = "newTestConfiguration";
+        private final UpdateConfigurationRequest updateConfigurationRequest = UpdateConfigurationRequestTestFactory.create();
 
         @Test
         public void shouldLogUpdateConfiguration() {
             final var expectedResponse = ResponseEntity.ok().build();
-            when(configurationService.updateConfiguration(configId, configuration)).thenReturn(expectedResponse);
+            when(configurationService.updateConfiguration(configId, updateConfigurationRequest)).thenReturn(expectedResponse);
 
-            final var actualResponse = configurationController.updateConfiguration(configId, configuration);
+            final var actualResponse = configurationController.updateConfiguration(configId, updateConfigurationRequest);
 
             assertThat(actualResponse).isEqualTo(expectedResponse);
         }
@@ -99,9 +98,9 @@ public class ConfigurationControllerLoggingAspectTest {
         @Test
         public void shouldLogUpdateConfiguration_NonExistentConfigId() {
             final var expectedResponse = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            when(configurationService.updateConfiguration(configId, configuration)).thenReturn(expectedResponse);
+            when(configurationService.updateConfiguration(configId, updateConfigurationRequest)).thenReturn(expectedResponse);
 
-            final var actualResponse = configurationController.updateConfiguration(configId, configuration);
+            final var actualResponse = configurationController.updateConfiguration(configId, updateConfigurationRequest);
 
             assertThat(actualResponse).isEqualTo(expectedResponse);
         }

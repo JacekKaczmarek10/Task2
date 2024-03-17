@@ -55,17 +55,23 @@ public class ConfigurationService {
         return ResponseEntity.ok(new GetConfigurationResponse(config.get()));
     }
 
-    ResponseEntity<Object> updateConfiguration(final Long configId, final String newConfiguration) {
+    ResponseEntity<Object> updateConfiguration(final Long configId, final UpdateConfigurationRequest updateConfigurationRequest) {
         final var config = configurationRepository.findById(configId);
         if (config.isEmpty()){
             return handleCheckExistingObjectException(new IllegalArgumentException(
                 CONFIGURATION_ID_PREFIX + configId + DOES_NOT_EXIST_MESSAGE));
         }
-        return ResponseEntity.ok(new ConfigurationResponse(saveUpdatedConfig(newConfiguration, config.get())));
+        final var iotDevice = ioTDeviceRepository.findByDeviceId(updateConfigurationRequest.deviceId());
+        if (iotDevice.isEmpty()) {
+            return handleCheckExistingObjectException(new IllegalArgumentException(
+                DEVICE_ID_PREFIX + updateConfigurationRequest.deviceId() + DOES_NOT_EXIST_MESSAGE));
+        }
+        return ResponseEntity.ok(new ConfigurationResponse(saveUpdatedConfig(updateConfigurationRequest, config.get(), iotDevice.get())));
     }
 
-    ConfigurationEntity saveUpdatedConfig(String newConfiguration, ConfigurationEntity config){
-        config.setConfiguration(newConfiguration);
+    ConfigurationEntity saveUpdatedConfig(final UpdateConfigurationRequest updateConfigurationRequest, ConfigurationEntity config, IoTDeviceEntity iotDevice){
+        config.setConfiguration(updateConfigurationRequest.configuration());
+        config.setDeviceKey(iotDevice);
         config.setModifiedAt(LocalDateTime.now());
         return configurationRepository.save(config);
     }

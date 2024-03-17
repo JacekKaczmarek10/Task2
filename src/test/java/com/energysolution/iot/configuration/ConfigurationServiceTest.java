@@ -11,7 +11,6 @@ import com.energysolution.iot.iotdevice.IotDeviceRepository;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -203,8 +202,9 @@ class ConfigurationServiceTest {
     class UpdateConfigurationTest {
 
         private final Long configId = 1L;
-        private final String configuration = "configuration";
+        private final UpdateConfigurationRequest updateConfigurationRequest = UpdateConfigurationRequestTestFactory.create();
         private ConfigurationEntity configurationEntity = ConfigurationEntityTestFactory.create();
+        private IoTDeviceEntity ioTDeviceEntity = IoTDeviceEntityTestFactory.create();
 
         @Test
         void shouldCallRepository() {
@@ -237,17 +237,19 @@ class ConfigurationServiceTest {
             configurationEntity.setConfiguration("oldConfiguration");
             configurationEntity.setModifiedAt(LocalDateTime.now().minusDays(1));
             when(configurationRepository.findById(configId)).thenReturn(Optional.of(configurationEntity));
-            when(service.saveUpdatedConfig(configuration, configurationEntity)).thenReturn(configurationEntity);
+            when(service.saveUpdatedConfig(updateConfigurationRequest, configurationEntity, ioTDeviceEntity)).thenReturn(configurationEntity);
+            when(iotDeviceRepository.findByDeviceId(updateConfigurationRequest.deviceId())).thenReturn(Optional.of(ioTDeviceEntity));
 
             callService();
 
-            verify(service).saveUpdatedConfig(configuration, configurationEntity);
+            verify(service).saveUpdatedConfig(updateConfigurationRequest, configurationEntity, ioTDeviceEntity);
         }
 
         @Test
         void shouldReturnOk() {
             when(configurationRepository.findById(configId)).thenReturn(Optional.of(configurationEntity));
-            when(service.saveUpdatedConfig(configuration, configurationEntity)).thenReturn(configurationEntity);
+            when(service.saveUpdatedConfig(updateConfigurationRequest, configurationEntity, ioTDeviceEntity)).thenReturn(configurationEntity);
+            when(iotDeviceRepository.findByDeviceId(updateConfigurationRequest.deviceId())).thenReturn(Optional.of(ioTDeviceEntity));
 
             final var responseEntity = callService();
 
@@ -257,7 +259,8 @@ class ConfigurationServiceTest {
         @Test
         void shouldReturnResponse() {
             when(configurationRepository.findById(configId)).thenReturn(Optional.of(configurationEntity));
-            when(service.saveUpdatedConfig(configuration, configurationEntity)).thenReturn(configurationEntity);
+            when(service.saveUpdatedConfig(updateConfigurationRequest, configurationEntity, ioTDeviceEntity)).thenReturn(configurationEntity);
+            when(iotDeviceRepository.findByDeviceId(updateConfigurationRequest.deviceId())).thenReturn(Optional.of(ioTDeviceEntity));
 
             final var responseEntity = callService();
 
@@ -265,7 +268,7 @@ class ConfigurationServiceTest {
         }
 
         private ResponseEntity<Object> callService() {
-            return service.updateConfiguration(configId, configuration);
+            return service.updateConfiguration(configId, updateConfigurationRequest);
         }
     }
 
@@ -273,9 +276,9 @@ class ConfigurationServiceTest {
     class SaveUpdatedConfigTest {
 
         private final String deviceId = "deviceId";
-        private final String configuration = "configuration";
         private final ConfigurationEntity configurationEntity = new ConfigurationEntity();
-        private final IoTDeviceEntity ioTDeviceEntity = new IoTDeviceEntity();
+        private final IoTDeviceEntity ioTDeviceEntity = IoTDeviceEntityTestFactory.create();
+        private final UpdateConfigurationRequest updateConfigurationRequest = UpdateConfigurationRequestTestFactory.create();
 
         @BeforeEach
         void setUp() {
@@ -288,25 +291,25 @@ class ConfigurationServiceTest {
             callService();
 
             verify(configurationRepository).save(argThat(config -> config.getDeviceId().equals(deviceId) && config.getConfiguration()
-                .equals(configuration)));
+                .equals(updateConfigurationRequest.configuration())));
         }
 
         @Test
         void shouldReturnUpdatedConfigEntity() {
             when(configurationRepository.save(argThat(config -> config.getDeviceId().equals(deviceId) && config.getConfiguration()
-                .equals(configuration)))).thenReturn(new ConfigurationEntity() {{
+                .equals(updateConfigurationRequest.configuration())))).thenReturn(new ConfigurationEntity() {{
                 setDeviceId(deviceId);
-                setConfiguration(configuration);
+                setConfiguration(updateConfigurationRequest.configuration());
             }});
 
             final var configEntity = callService();
 
             assertThat(configEntity.getDeviceId()).isEqualTo(deviceId);
-            assertThat(configEntity.getConfiguration()).isEqualTo(configuration);
+            assertThat(configEntity.getConfiguration()).isEqualTo(updateConfigurationRequest.configuration());
         }
 
         private ConfigurationEntity callService() {
-            return service.saveUpdatedConfig(configuration, configurationEntity);
+            return service.saveUpdatedConfig(updateConfigurationRequest, configurationEntity, ioTDeviceEntity);
         }
     }
 
