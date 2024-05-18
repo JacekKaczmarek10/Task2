@@ -1,7 +1,7 @@
 # Zadanie rekrutacyjne na stanowisko programisty w Codepred
 
 Poniższe zadanie jest okazją dla kandydata, aby przedstawić przykłady swojej wiedzy i umiejętności
-praktycznych z zakresu programowania. Jest to również świetna okazja dla zespołu Energy Solution do
+praktycznych z zakresu programowania. Jest to również świetna okazja dla zespołu Codepred do
 oceny wykorzystania umiejętności i technologii przez kandydata. Zadanie to będzie wykorzystywane
 jako punkt dyskusji podczas dodatkowych rozmów kwalifikacyjnych.
 
