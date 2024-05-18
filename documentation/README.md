@@ -34,9 +34,9 @@ prezentacyjnych.
 # Pytania do zadania
 
 Jeżeli masz jakieś pytania napisz e-mail na
-adres [Dominik Dziąg (d.dziag@energysolution.pl)](mailto:d.dziag@energysolution.pl)
+adres [Jacek Kaczmarek (kontakt@codepred.pl)](mailto:kontakt@codepred.pl)
 
 # Sposób przekazania rozwiązania
 
 Umieść projekt w publicznym repozytorium github i wyślij link do niego na
-adres [Dominik Dziąg (d.dziag@energysolution.pl)](mailto:d.dziag@energysolution.pl)
+adres [Jacek Kaczmarek  (kontakt@codepred.pl)](mailto:kontakt@codepred.pl)
