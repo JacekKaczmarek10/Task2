@@ -31,12 +31,16 @@ docker compose up -d --build
 | device3   | 2024-10-10T10:00:00 | 2024-10-10T10:00:00 | 2024-10-10T10:00:00 | 2024-10-10T10:00:00 | Name3    | Street3    | 3               | NULL             | City3    | 34567       | Country3   |
 
 
+## Swagger url
+http://localhost:8052/swagger-ui/index.html
+
 ## H2 Database url
 http://localhost:8080/h2-console
 
 ## Code coverage
+![image](https://github.com/JacekKaczmarek10/Task2/assets/104677364/b31a8168-74b4-4db1-98ef-82403fe67079)
 
-> score>80%
+> score>85%
 
 
 ## Copyright
