@@ -1,7 +1,6 @@
 # energy-crud-app
 
-
-Crud [Spring Boot](http://projects.spring.io/spring-boot/) sample app.
+Recrutiment task, REST Api in Java and Spring boot.
 
 ## Requirements
 
