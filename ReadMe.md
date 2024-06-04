@@ -1,6 +1,6 @@
 # energy-crud-app
 
-Recrutiment task, REST Api in Java and Spring boot.
+Recruitment task for a company from the energy industry.  The code was written using TDD. Rest Api with crud operations using java and spring boot and h2 database. 
 
 ## Requirements
 
