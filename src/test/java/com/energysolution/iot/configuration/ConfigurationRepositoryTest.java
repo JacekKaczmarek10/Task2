@@ -15,7 +15,6 @@ class ConfigurationRepositoryTest {
     @Autowired
     private ConfigurationRepository configurationRepository;
 
-
     @Nested
     class FindByDeviceIdTest {
 
